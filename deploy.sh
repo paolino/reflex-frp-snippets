@@ -12,7 +12,7 @@ if [ -d "$dirname" ]
 mkdir $dirname
 
 ccjs all.js --compilation_level=ADVANCED_OPTIMIZATIONS --externs=node > $dirname/all.min.js 
-cp /home/paolino/reflex-platform/reflex-frp-snippets/index.html.serve $dirname/index.html
+cp ../index.html.serve $dirname/index.html
 
 scp -r $dirname lambdasistemi.net:public/ghcjs
 
