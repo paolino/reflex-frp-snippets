@@ -1,0 +1,23 @@
+.app li {
+	list-style: none;
+}
+
+.code {font-size:0.6em}
+.header
+   {background-color: yellow;
+	  padding:1em;
+		margin: 1em;
+		font-size:1.3em;
+		border-radius:3em;
+		padding-left:3em;
+
+   }
+.seps{
+	 margin:2em;
+	 color:lightgray;
+	 border-radius:3em;
+	background-color:lightgreen;
+	padding:1em;
+	padding-left:3em;
+	font-size:0.5em;
+}

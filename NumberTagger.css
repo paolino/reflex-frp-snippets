@@ -1,0 +1,14 @@
+.record span{
+	 margin:0.2em;
+	 padding:0.2em;
+	 border-radius:0.2em;
+	background-color: whitesmoke;
+	
+}
+.record {
+	list-style:none;
+	background-color:beige;
+	margin:0.1em;
+	border-radius:0.2em;
+}
+.app span {display: inline-block}
