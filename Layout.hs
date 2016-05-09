@@ -13,15 +13,12 @@ import Data.String.Here
 import GHCJS.DOM.Document (setTitle)
 import Lib
 
-hss = [
-        $(embedStringFile "Lib.hs")
-    ,   $(embedStringFile "Layout.hs")
-    ]
+this = $(embedStringFile "Layout.hs")
 
 css = $(embedStringFile "Tutorial.css")
 
 sep :: MS m => m ()
-sep = divClass "seps" $ replicateM_ 3 $ divClass "sep" $ text $ replicate 80 '-'
+sep = divClass "header" $ end
 
 showCode hs = do
     holdDyn (color hs) never >>= 
@@ -37,6 +34,7 @@ mainWidgetWithAssets title description hs mcss w = mainWidget . void $ do
     maybe end (el "style" . text) mcss
     divClass "header" $ text $ description 
     divClass "app" w
-    mapM_ (\x -> sep >> showCode x) $ hs:hss
+    
+    mapM_ (\x -> sep >> showCode x) $ hs ++ [this]
     sep
-    text css
+    divClass "css" $ text css

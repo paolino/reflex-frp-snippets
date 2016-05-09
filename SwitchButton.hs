@@ -12,6 +12,19 @@ type BS = Behavior Spider
 
 data Color = White | Red deriving Show
 
+stream :: MS m =>  [a] -> ES b -> m (DS a)
+stream xs e = foldDyn ($) (cycle xs) (tail <$ e) >>= mapDyn head
+
+ite :: a -> a -> Bool -> a
+ite x y b = if b then x else y
+
+touchMouse x y w = leftmost 
+        [   x <$ domEvent Mousedown w
+        ,   y <$ domEvent Mouseup w
+        ,   x <$ domEvent Touchstart w
+        ,   y <$ domEvent Touchend w]
+
+
 light :: MS m => DS Color ->  m ()
 light color = do
     attrs <- mapDyn (\c -> fromList [("style","background-color:" ++ show c),("class","light")]) color
@@ -19,19 +32,18 @@ light color = do
 
 driver :: MS m => ES Color -> ES Color -> m (DS Bool)
 driver e1 e2 = do
-    flipper <- (not <$) <$> button "switch"
-    choice <- foldDyn ($) True flipper
-    let e = switch $ (\t -> if t then e1 else e2) <$> (current choice)
-    holdDyn White e >>= light
-    return choice
+    
+    flipper <- button "switch"
+    choice <- stream [e1,e2] flipper 
+    holdDyn White (switch $ current choice) >>= light
+    stream [True,False] flipper
 
 lighter :: MS m => String -> DS Bool -> m (ES Color)
 lighter name attr = do
-    bg <- mapDyn ((\c -> fromList [("style","background-color:" ++ c),("type","button")]).
-                    (\t -> if t then "yellow" else "grey")) attr
+    let colorise c = fromList [("style","background-color:" ++ c),("type","button")]
+    bg <- mapDyn (colorise . ite "yellow" "grey") attr
     btn <- fmap fst . elDynAttr' "button" bg $ text name
-    return $ leftmost 
-        [Red <$ domEvent Mousedown btn, White <$ domEvent Mouseup btn]
+    return $ touchMouse Red White btn 
 
     
 wiring :: MS m => m ()
@@ -57,7 +69,7 @@ A button to switch between the two.
 main = mainWidgetWithAssets 
     "Switch button" 
     description  
-    $(embedStringFile "SwitchButton.hs") 
+    [$(embedStringFile "SwitchButton.hs")]
     (Just $(embedStringFile "SwitchButton.css")) $ do
         wiring 
 

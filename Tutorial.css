@@ -1,15 +1,22 @@
+.app {
+	 	margin-left:1em;
+	  margin-bottom:1em;
+
+}
 .app li {
 	list-style: none;
 }
-
-.code {font-size:0.6em}
+body {margin:0em;}
+.code {font-size:0.6em;margin:1em}
 .header
-   {background-color: yellow;
+   {background-color: #dde;
 	  padding:1em;
-		margin: 1em;
-		font-size:1.3em;
-		border-radius:3em;
-		padding-left:3em;
+		margin-bottom: 1em;
+		font-size:0.8em;
+		font-style:oblique;
+		border-radius:0em;
+		padding-left:2em;
+		 padding-right:2em;
 
    }
 .seps{
@@ -21,3 +28,17 @@
 	padding-left:3em;
 	font-size:0.5em;
 }
+.light {
+        width:4em;
+        height:4em;
+        border-radius:2em;
+        border:0.2em solid grey;
+        margin:1em;
+    }
+button {
+  border:1px solid #aaa;
+  margin:0.2em;
+  border-radius:0.3em;
+  padding:1em;
+  
+  }

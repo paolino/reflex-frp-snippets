@@ -28,5 +28,5 @@ description = [here|
 Count 1 to 10 with li elements.
 |]
 
-main = mainWidgetWithAssets "Dynamic List" description  $(embedStringFile "DynamicList.hs") $ wiring
+main = mainWidgetWithAssets "Dynamic List" description  $(embedStringFile "DynamicList.hs") Nothing $ wiring
 
